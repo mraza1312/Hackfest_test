@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -15,6 +17,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -36,9 +40,9 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
 
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView scannerView;
-
-
-
+    private final String address = "20:15:10:29:02:90";
+    BluetoothThread btt;
+    Handler writeHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,25 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         setContentView(scannerView);
         int currentApiVersion = Build.VERSION.SDK_INT;
         rootRef = FirebaseDatabase.getInstance().getReference();
+
+        btt = new BluetoothThread(address, new Handler() {
+
+            @Override
+            public void handleMessage(Message message) {
+
+
+                for(int a=0;a<100000;a++);
+                Toast.makeText(getApplicationContext(),"Connected",Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+        // Get the handler that is used to send messages
+        writeHandler = btt.getWriteHandler();
+
+        // Run the thread
+        btt.start();
+
 
         if(currentApiVersion >=  Build.VERSION_CODES.M)
         {
@@ -168,8 +191,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                 rootRef.equalTo(array[0]).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            if (dataSnapshot.child("").exists()) {
+                            if (dataSnapshot.child(array[0]).exists()) {
                                 //update value of quantity
                                 //rootRef.child(array[0]).child("Quantity").setValue("2");
                                 Toast.makeText(getApplicationContext(), "detected", Toast.LENGTH_LONG).show();
@@ -181,8 +203,16 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                                 //demoRef.child("Quantity").setValue(1);
                                 demoRef.child("price").setValue(array[2]);
 
+                                String data = "Get";
+                                Message msg = Message.obtain();
+                                msg.obj = data;
+                                writeHandler.sendMessage(msg);
+
                             }
-                        }
+
+                    }
+
+
 
 
                     @Override
