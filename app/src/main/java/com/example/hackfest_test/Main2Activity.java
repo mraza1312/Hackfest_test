@@ -63,6 +63,8 @@ public class Main2Activity extends AppCompatActivity {
         Message msg = Message.obtain();
         msg.obj = data;
         writeHandler.sendMessage(msg);
+          Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+          startActivity(intent);
       }
     };
 }
