@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        Log.d("Datasnapshot", String.valueOf(rootRef.child(array[0]).));
+                        Log.d("Datasnapshot", String.valueOf(rootRef.child(array[0])));
                             if (false) {
                                 //update value of quantity
                                 //rootRef.child(array[0]).child("Quantity").setValue("2");
