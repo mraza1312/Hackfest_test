@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
         int currentApiVersion = Build.VERSION.SDK_INT;
-        rootRef = FirebaseDatabase.getInstance().getReference();
+        rootRef = FirebaseDatabase.getInstance().getReference("Cart");
 
         btt = new BluetoothThread(address, new Handler() {
 
@@ -191,7 +191,9 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                 rootRef.equalTo(array[0]).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.child(array[0]).exists()) {
+
+                        Log.d("Datasnapshot", String.valueOf(rootRef.child(array[0]).));
+                            if (false) {
                                 //update value of quantity
                                 //rootRef.child(array[0]).child("Quantity").setValue("2");
                                 Toast.makeText(getApplicationContext(), "detected", Toast.LENGTH_LONG).show();
