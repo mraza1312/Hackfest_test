@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                                 //demoRef.child("Quantity").setValue(1);
                                 demoRef.child("price").setValue(array[2]);
 
-                                String data = "Get";
+                                String data = "g";
                                 Message msg = Message.obtain();
                                 msg.obj = data;
                                 writeHandler.sendMessage(msg);
