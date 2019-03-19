@@ -1,5 +1,6 @@
 
-# Smart shopping cart - Based on Walmart's Problem Statement in Hackfest2k19, IIT(ISM) Dhanbad
+# Smart shopping cart - Based on Walmart's Problem Statement
+# Hackfest2k19, IIT(ISM) Dhanbad
 
 ## We have designed a **Smart Cart** which attempts to provide the customer a **trouble-free** shopping experience.
 
